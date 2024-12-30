@@ -5,11 +5,13 @@ import (
 	"log/slog"
 )
 
-// DefaultLogger is used by Cron if none is specified.
-var DefaultLogger Logger = slog.Default()
+var (
+	// DefaultLogger is used by Cron if none is specified.
+	DefaultLogger Logger = slog.Default()
 
-// DiscardLogger can be used by callers to discard all log messages.
-var DiscardLogger Logger = slog.New(slog.NewTextHandler(io.Discard, nil))
+	// DiscardLogger can be used by callers to discard all log messages.
+	DiscardLogger Logger = slog.New(slog.NewTextHandler(io.Discard, nil))
+)
 
 // Logger is the interface used in this package for logging, so that any backend can be plugged in.
 type Logger interface {

@@ -54,17 +54,20 @@ type Parser struct {
 // It panics if more than one Optional is given, since it would be impossible to
 // correctly infer which optional is provided or missing in general.
 //
-// Examples
+// # Examples
 //
-//	// Standard parser without descriptors
+// Standard parser without descriptors
+//
 //	specParser := NewParser(Minute | Hour | Dom | Month | Dow)
 //	sched, err := specParser.Parse("0 0 15 */3 *")
 //
-//	// Same as above, just excludes time fields
+// Same as above, just excludes time fields
+//
 //	specParser := NewParser(Dom | Month | Dow)
 //	sched, err := specParser.Parse("15 */3 *")
 //
-//	// Same as above, just makes Dow optional
+// Same as above, just makes Dow optional
+//
 //	specParser := NewParser(Dom | Month | DowOptional)
 //	sched, err := specParser.Parse("15 */3")
 func NewParser(options ParseOption) Parser {

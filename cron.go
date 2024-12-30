@@ -2,6 +2,7 @@ package cron
 
 import (
 	"context"
+	"runtime"
 	"sort"
 	"sync"
 	"time"
@@ -308,7 +309,13 @@ func (c *Cron) run() {
 func (c *Cron) startJob(j Job) {
 	c.jobWaiter.Add(1)
 	go func() {
-		defer c.jobWaiter.Done()
+		defer func() {
+			if rec := recover(); rec != nil {
+				buf := make([]byte, 1<<16)
+				runtime.Stack(buf, true)
+			}
+			c.jobWaiter.Done()
+		}()
 		j.Run()
 	}()
 }
